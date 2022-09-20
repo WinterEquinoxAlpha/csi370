@@ -1,0 +1,50 @@
+Microsoft (R) Macro Assembler (x64) Version 14.32.31329.0   09/13/22 11:58:49
+Code.asm						     Page 1 - 1
+
+
+				; First Program for MASM 64-bit
+
+				extrn ExitProcess : proc
+
+ 00000000			.DATA
+ 00000000			num QWORD 80
+	   0000000000000050
+ 00000008			sum QWORD ?
+	   0000000000000000
+
+ 00000000			.CODE
+
+ 00000000			_main PROC
+ 00000000  48/ 8B 05		   mov rax, num
+	   00000000 R
+ 00000007  48/ 83 C0 14		   add rax, 20
+ 0000000B  48/ 89 05		   mov sum, rax
+	   00000008 R
+
+ 00000012  48/ 33 C9		xor rcx, rcx
+ 00000015  E8 00000000 E	call ExitProcess
+ 0000001A			_main ENDP
+				END
+Microsoft (R) Macro Assembler (x64) Version 14.32.31329.0   09/13/22 11:58:49
+Code.asm						     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_main  . . . . . . . . . . . . .	P 	 00000000 _TEXT	Length= 0000001A Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	L 	 00000000 External
+num  . . . . . . . . . . . . . .	QWord	 00000000 _DATA	
+sum  . . . . . . . . . . . . . .	QWord	 00000008 _DATA	
+
+	   0 Warnings
+	   0 Errors
