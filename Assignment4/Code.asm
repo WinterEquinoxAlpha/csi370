@@ -6,7 +6,7 @@ extrn ExitProcess : proc			; forward declare the exit function
 array WORD 5, 10, 15, 20			; create a WORD array with the given values
 multiplier BYTE 8					; create a BYTE to hold the value that multiplies
 
-arrayD DWORD ?						; create a DWORD array with undelcared values. this is created after the declared memory to prevent it from overriding values
+arrayD DWORD ?, ?, ?, ?				; create a DWORD array with undelcared values
 
 .CODE								; section headerr to write code
 
