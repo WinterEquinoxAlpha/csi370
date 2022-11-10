@@ -1,13 +1,16 @@
 ﻿  Main.cpp
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(28,2): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(29,3): error C2065: 'mov': undeclared identifier
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(29,7): error C2146: syntax error: missing ';' before identifier 'a'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(30,3): error C2146: syntax error: missing ';' before identifier 'movss'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(30,3): error C2065: 'movss': undeclared identifier
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(30,9): error C2146: syntax error: missing ';' before identifier 'xmm0'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(30,9): error C2065: 'xmm0': undeclared identifier
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(31,3): error C2146: syntax error: missing ';' before identifier 'call'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(31,3): error C2065: 'call': undeclared identifier
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(31,8): error C2146: syntax error: missing ';' before identifier 'printFloat'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(32,2): error C2143: syntax error: missing ';' before '}'
-C:\Users\michael.kashian\Documents\csi370\Assignment9\Main.cpp(31,8): warning C4551: function call missing argument list
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(29,2): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(30,3): error C2065: 'finit': undeclared identifier
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(31,3): error C2146: syntax error: missing ';' before identifier 'call'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(31,3): error C2065: 'call': undeclared identifier
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(31,8): error C2146: syntax error: missing ';' before identifier 'getFloat'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(32,3): error C2146: syntax error: missing ';' before identifier 'fadd'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(31,8): warning C4551: function call missing argument list
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(32,3): error C2065: 'fadd': undeclared identifier
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(32,8): error C2146: syntax error: missing ';' before identifier 'ST'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(32,8): error C3861: 'ST': identifier not found
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(32,15): error C3861: 'ST': identifier not found
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(33,3): error C2146: syntax error: missing ';' before identifier 'fstp'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(33,3): error C2065: 'fstp': undeclared identifier
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(33,8): error C2146: syntax error: missing ';' before identifier 'a'
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(34,2): error C2143: syntax error: missing ';' before '}'

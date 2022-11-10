@@ -1,2 +1,5 @@
 ﻿  Main.cpp
-  Assignment9.vcxproj -> C:\Users\michael.kashian\Documents\csi370\Assignment9\Debug\Assignment9.exe
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(57): warning C4405: 'out': identifier is reserved word
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(60): warning C4405: 'out': identifier is reserved word
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Main.cpp(62): warning C4405: 'out': identifier is reserved word
+  Assignment9.vcxproj -> C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Debug\Assignment9.exe

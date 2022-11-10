@@ -1,1 +1,2 @@
 C:\Users\michael.kashian\Documents\csi370\Assignment9\Debug\Assignment9.exe
+C:\Users\michael.kashian\Documents\GameAI\csi370\Assignment9\Debug\Assignment9.exe
