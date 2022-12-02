@@ -8,6 +8,7 @@ char board[] = {' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','-','-','-','+','-'
 const int boardSize = 58;
 bool Xturn = true;
 bool gameOver = false;
+bool ai = true;
 
 void printBoard(char b[], const int bs)
 {
@@ -16,7 +17,6 @@ void printBoard(char b[], const int bs)
 		cout << b[i];
 	}
 }
-
 
 // 1, 5, 9
 // 24, 28, 32
@@ -56,39 +56,33 @@ bool checkGameOver(char bv[])
 	}
 	if (boardFull)
 	{
+		cout << "\nDraw\n";
 		return true;
 	}
 
-	if (bv[0] == 'X' && bv[3] == 'X' && bv[6] == 'X')
+	if ((bv[0] == 'X' && bv[3] == 'X' && bv[6] == 'X') ||
+		(bv[1] == 'X' && bv[4] == 'X' && bv[7] == 'X') ||
+		(bv[2] == 'X' && bv[5] == 'X' && bv[8] == 'X') ||
+		(bv[0] == 'X' && bv[1] == 'X' && bv[2] == 'X') ||
+		(bv[3] == 'X' && bv[4] == 'X' && bv[5] == 'X') ||
+		(bv[6] == 'X' && bv[7] == 'X' && bv[8] == 'X') ||
+		(bv[0] == 'X' && bv[4] == 'X' && bv[8] == 'X') ||
+		(bv[2] == 'X' && bv[4] == 'X' && bv[6] == 'X'))
 	{
+		cout << "\nX Wins\n";
 		return true;
 	}
-	if (bv[1] == 'X' && bv[4] == 'X' && bv[7] == 'X')
+
+	if ((bv[0] == 'O' && bv[3] == 'O' && bv[6] == 'O') ||
+		(bv[1] == 'O' && bv[4] == 'O' && bv[7] == 'O') ||
+		(bv[2] == 'O' && bv[5] == 'O' && bv[8] == 'O') ||
+		(bv[0] == 'O' && bv[1] == 'O' && bv[2] == 'O') ||
+		(bv[3] == 'O' && bv[4] == 'O' && bv[5] == 'O') ||
+		(bv[6] == 'O' && bv[7] == 'O' && bv[8] == 'O') ||
+		(bv[0] == 'O' && bv[4] == 'O' && bv[8] == 'O') ||
+		(bv[2] == 'O' && bv[4] == 'O' && bv[6] == 'O'))
 	{
-		return true;
-	}
-	if (bv[2] == 'X' && bv[5] == 'X' && bv[8] == 'X')
-	{
-		return true;
-	}
-	if (bv[0] == 'X' && bv[1] == 'X' && bv[2] == 'X')
-	{
-		return true;
-	}
-	if (bv[3] == 'X' && bv[4] == 'X' && bv[5] == 'X')
-	{
-		return true;
-	}
-	if (bv[6] == 'X' && bv[7] == 'X' && bv[8] == 'X')
-	{
-		return true;
-	}
-	if (bv[0] == 'X' && bv[4] == 'X' && bv[8] == 'X')
-	{
-		return true;
-	}
-	if (bv[2] == 'X' && bv[4] == 'X' && bv[6] == 'X')
-	{
+		cout << "\nO Wins\n";
 		return true;
 	}
 
@@ -105,19 +99,26 @@ int main()
 		int move = -1;
 		while (move == -1)
 		{
-			move = getInput(Xturn);
-			cout << move << std::endl;
-			if (move < 0 || move > 8)
+			if (ai && !Xturn)
 			{
-				cout << "Move out of range 0-8\n\n";
-				move = -1;
-				continue;
+				move = 0;
 			}
-			if (boardValues[move] != ' ')
+			else
 			{
-				cout << "Position taken\n\n";
-				move = -1;
-				continue;
+				move = getInput(Xturn);
+				cout << move << std::endl;
+				if (move < 0 || move > 8)
+				{
+					cout << "Move out of range 0-8\n\n";
+					move = -1;
+					continue;
+				}
+				if (boardValues[move] != ' ')
+				{
+					cout << "Position taken\n\n";
+					move = -1;
+					continue;
+				}
 			}
 		}
 
