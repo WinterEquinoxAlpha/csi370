@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using std::cout;
 using std::cin;
@@ -7,7 +8,7 @@ char boardValues[] = {' ',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 char board[] = {' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','-','-','-','+','-','-','-','+','-','-','-','\n',' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','-','-','-','+','-','-','-','+','-','-','-','\n',' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','\n'};
 const int boardSize = 58;
 bool Xturn = true;
-bool gameOver = false;
+int gameOver = -1;
 bool ai = true;
 
 void printBoard(char b[], const int bs)
@@ -43,7 +44,40 @@ int getInput(bool& turn)
 	return move;
 }
 
-bool checkGameOver(char bv[])
+// l = 0-2: Vertical lines
+// l = 3-5: Horrizontal lines
+// l = 6-7: Diagonal lines
+bool checkLine(char bv[], int l, char c)
+{
+	if (l < 3)
+	{
+		return (bv[l] == c && bv[l + 3] == c && bv[l + 6] == c);
+	}
+	if (l >= 3 && l < 6)
+	{
+		int i = (l - 3) * 3;
+		return (bv[i] == c && bv[i + 1] == c && bv[i + 2] == c);
+	}
+	int i = (l - 6) * 2;
+	return (bv[i] == c && bv[4] == c && bv[8 - i] == c);
+}
+
+int countCharsInLine(char bv[], int l, char c)
+{
+	if (l < 3)
+	{
+		return (int)(bv[l] == c) + (int)(bv[l + 3] == c) + (int)(bv[l + 6] == c);
+	}
+	if (l >= 3 && l < 6)
+	{
+		int i = (l - 3) * 3;
+		return (int)(bv[i] == c) + (int)(bv[i + 1] == c) + (int)(bv[i + 2] == c);
+	}
+	int i = (l - 6) * 2;
+	return (int)(bv[i] == c) + (int)(bv[4] == c) + (int)(bv[8 - i] == c);
+}
+
+int checkGameOver(char bv[])
 {
 	bool boardFull = true;
 	for (int i = 0; i < 9; ++i)
@@ -55,43 +89,120 @@ bool checkGameOver(char bv[])
 		}
 	}
 	if (boardFull)
+		return 0;
+
+	for (int i = 0; i < 8; ++i)
 	{
-		cout << "\nDraw\n";
-		return true;
+		if (checkLine(bv, i, 'X'))
+			return 1;
+
+		if (checkLine(bv, i, 'O'))
+			return 2;
 	}
 
-	if ((bv[0] == 'X' && bv[3] == 'X' && bv[6] == 'X') ||
-		(bv[1] == 'X' && bv[4] == 'X' && bv[7] == 'X') ||
-		(bv[2] == 'X' && bv[5] == 'X' && bv[8] == 'X') ||
-		(bv[0] == 'X' && bv[1] == 'X' && bv[2] == 'X') ||
-		(bv[3] == 'X' && bv[4] == 'X' && bv[5] == 'X') ||
-		(bv[6] == 'X' && bv[7] == 'X' && bv[8] == 'X') ||
-		(bv[0] == 'X' && bv[4] == 'X' && bv[8] == 'X') ||
-		(bv[2] == 'X' && bv[4] == 'X' && bv[6] == 'X'))
+	return -1;
+}
+
+int evaluateBoard(char bv[])
+{
+	int score = checkGameOver(bv);
+	if (score == 1)
 	{
-		cout << "\nX Wins\n";
-		return true;
+		return INT_MIN;
+	}
+	if (score == 2)
+	{
+		return INT_MAX;
 	}
 
-	if ((bv[0] == 'O' && bv[3] == 'O' && bv[6] == 'O') ||
-		(bv[1] == 'O' && bv[4] == 'O' && bv[7] == 'O') ||
-		(bv[2] == 'O' && bv[5] == 'O' && bv[8] == 'O') ||
-		(bv[0] == 'O' && bv[1] == 'O' && bv[2] == 'O') ||
-		(bv[3] == 'O' && bv[4] == 'O' && bv[5] == 'O') ||
-		(bv[6] == 'O' && bv[7] == 'O' && bv[8] == 'O') ||
-		(bv[0] == 'O' && bv[4] == 'O' && bv[8] == 'O') ||
-		(bv[2] == 'O' && bv[4] == 'O' && bv[6] == 'O'))
+	int x1 = 0;
+	int x2 = 0;
+	int o1 = 0;
+	int o2 = 0;
+
+	for (int i = 0; i < 8; ++i)
 	{
-		cout << "\nO Wins\n";
-		return true;
+		int x = countCharsInLine(bv, i, 'X');
+		x1 += (x == 1);
+		x2 += (x == 2);
+
+		int o = countCharsInLine(bv, i, 'O');
+		o1 += (o == 1);
+		o2 += (o == 2);
 	}
 
-	return false;
+	return 3 * o2 + o1 - (3 * x2 + x1);
+}
+
+int minimax(char bv[], int depth, bool maximizer)
+{
+	int score = checkGameOver(bv);
+	if (score == 0)
+		return 0;
+	if (score == 1)
+		return INT_MIN;
+	if (score == 2)
+		return INT_MAX;
+
+	if (maximizer)
+	{
+		int best = INT_MIN;
+
+		for (int i = 0; i < 9; ++i)
+		{
+			if (bv[i] == ' ')
+			{
+				bv[i] = 'O';
+				best = std::max(best, minimax(board, depth + 1, !maximizer));
+				bv[i] = ' ';
+			}
+		}
+		return best;
+	}
+	else
+	{
+		int best = INT_MAX;
+
+		// Traverse all cells
+		for (int i = 0; i < 9; ++i)
+		{
+			if (bv[i] == ' ')
+			{
+				bv[i] = 'X';
+				best = std::min(best, minimax(board, depth + 1, !maximizer));
+				bv[i] = ' ';
+			}
+		}
+		return best;
+	}
+}
+
+int findBestMove(char bv[])
+{
+	int bestMoveScore = INT_MIN;
+	int bestMove = -1;
+	for (int i = 0; i < 9; ++i)
+	{
+		if (bv[i] == ' ')
+		{
+			bv[i] = 'O';
+			int moveEval = minimax(bv, 0, false);
+			bv[i] = ' ';
+
+			if (moveEval > bestMoveScore)
+			{
+				bestMove = i;
+				bestMove = moveEval;
+			}
+		}
+	}
+
+	return bestMove;
 }
 
 int main()
 {
-	while (!gameOver)
+	while (gameOver == -1)
 	{
 		updateBoard(board, boardValues);
 		printBoard(board, boardSize);
@@ -101,7 +212,7 @@ int main()
 		{
 			if (ai && !Xturn)
 			{
-				move = 0;
+				move = findBestMove(boardValues);
 			}
 			else
 			{
@@ -127,6 +238,19 @@ int main()
 		Xturn = !Xturn;
 
 		gameOver = checkGameOver(boardValues);
+	}
+
+	if (gameOver == 0)
+	{
+		cout << "\nDraw\n";
+	}
+	else if (gameOver == 1)
+	{
+		cout << "\nX Wins\n";
+	}
+	else if (gameOver == 2)
+	{
+		cout << "\nO Wins\n";
 	}
 
 	updateBoard(board, boardValues);
