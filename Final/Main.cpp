@@ -1,22 +1,33 @@
 #include <iostream>
 #include <algorithm>
 
+extern "C" void asmMain();
+
 using std::cout;
 using std::cin;
 
 char boardValues[] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 char board[] = { ' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','-','-','-','+','-','-','-','+','-','-','-','\n',' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','-','-','-','+','-','-','-','+','-','-','-','\n',' ',' ',' ','|',' ',' ',' ','|',' ',' ','\n','\n' };
-const int boardSize = 58;
 bool Xturn = true;
 int gameOver = -1;
 bool ai = true;
 
-void printBoard(char b[], const int bs)
+extern "C" void printBoard(char* b)
 {
-	for (int i = 0; i < bs; ++i)
-	{
-		cout << b[i];
-	}
+	cout << b;
+}
+
+extern "C" int getInput(bool& turn)
+{
+	int move = 0;
+	cout << "Enter Move (0-8): ";
+	cin >> move;
+	return move;
+}
+
+extern "C" void printString(char* s)
+{
+	cout << s;
 }
 
 // 1, 5, 9
@@ -33,14 +44,6 @@ void updateBoard(char b[], char bv[])
 	b[47] = bv[6];
 	b[51] = bv[7];
 	b[55] = bv[8];
-}
-
-int getInput(bool& turn)
-{
-	int move = 0;
-	cout << "Enter Move (0-8): ";
-	cin >> move;
-	return move;
 }
 
 // l = 0-2: Vertical lines
@@ -72,7 +75,6 @@ int checkGameOver(char bv[])
 	{
 		if (checkLine(bv, i, 'X'))
 			return 1;
-
 		if (checkLine(bv, i, 'O'))
 			return 2;
 	}
@@ -80,9 +82,7 @@ int checkGameOver(char bv[])
 	for (int i = 0; i < 9; ++i)
 	{
 		if (bv[i] == ' ')
-		{
 			return -1;
-		}
 	}
 
 	return 0;
@@ -155,7 +155,10 @@ int findBestMove(char bv[])
 
 int main()
 {
-	while (gameOver == -1)
+	asmMain();
+	return 0;
+
+	/*while (gameOver == -1)
 	{
 		updateBoard(board, boardValues);
 		printBoard(board, boardSize);
@@ -196,15 +199,9 @@ int main()
 	printBoard(board, boardSize);
 	
 	if (gameOver == 0)
-	{
 		cout << "Draw\n";
-	}
 	else if (gameOver == 1)
-	{
 		cout << "X Wins\n";
-	}
 	else if (gameOver == 2)
-	{
-		cout << "O Wins\n";
-	}
+		cout << "O Wins\n";*/
 }
