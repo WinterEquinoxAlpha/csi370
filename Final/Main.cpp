@@ -161,7 +161,7 @@ int main()
 	/*while (gameOver == -1)
 	{
 		updateBoard(board, boardValues);
-		printBoard(board, boardSize);
+		printBoard(board);
 
 		int move = -1;
 		while (move == -1)
@@ -196,7 +196,7 @@ int main()
 	}
 
 	updateBoard(board, boardValues);
-	printBoard(board, boardSize);
+	printBoard(board);
 	
 	if (gameOver == 0)
 		cout << "Draw\n";
