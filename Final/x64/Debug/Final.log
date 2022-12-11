@@ -1,2 +1,4 @@
-﻿  Assembling Code.asm...
+﻿  Main.cpp
+E:\Repositories\csi370\Final\Main.cpp(44,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Repositories\csi370\Final\Main.cpp(55,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Final.vcxproj -> E:\Repositories\csi370\Final\x64\Debug\Final.exe
