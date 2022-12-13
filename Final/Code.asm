@@ -36,8 +36,6 @@ maximizer BYTE ?
 
 noAI QWORD 0
 
-inputPrompt BYTE "Enter Move (0-8): ", 0
-
 .code
 asmMain PROC
 	

@@ -13,7 +13,6 @@ char boardTutorial[] = { ' ','0',' ','|',' ','1',' ','|',' ','2','\n','-','-','-
 bool Xturn = true;
 int gameOver = -1;
 bool ai = true;
-
 bool assembly = true;
 
 extern "C" int getInput()
