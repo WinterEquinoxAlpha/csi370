@@ -1,5 +1,6 @@
 getInput PROTO
 printString PROTO
+queryAI PROTO
 
 asmPrintBoard PROTO
 asmUpdateBoard PROTO
@@ -19,6 +20,7 @@ oWinsMessage BYTE "O Wins", 13, 10, 0
 drawMessage BYTE "Draw", 13, 10, 0
 moveTakenMessage BYTE "Position taken", 13, 10, 13, 10, 0
 outOfRangeMessage BYTE "Move out of range 0-8", 13, 10, 13, 10, 0
+invalidAIInputMessage BYTE "Please input 0 or 1", 13, 10, 0
 
 playerMove QWORD ?
 specificValue BYTE ?
@@ -44,6 +46,25 @@ asmMain PROC
 	sub rsp, 20h
 	lea rbp, [rsp + 20h]
 
+	; Ask the player if they want to use AI
+	invalidAIInput:
+	call queryAI
+	mov noAI, rax
+	cmp noAI, 0
+	je turnOffAI
+	jl invalidAIInput
+	cmp noAI, 1
+	je turnOnAI
+	jg invalidAIInput
+
+	turnOffAI:
+	mov noAI, 1
+	jmp gameBeginLoop
+	turnOnAI:
+	mov noAI, 0
+	jmp gameBeginLoop
+
+	; -------- Main Game Loop --------
 	gameBeginLoop:
 
 	newMove:
@@ -64,11 +85,6 @@ asmMain PROC
 	; Get the player input
 	call getInput
 	mov playerMove, rax
-
-	cmp playerMove, 10
-	je turnOffAILabel
-	cmp playerMove, 11
-	je turnOnAILabel
 
 	cmp playerMove, 0
 	jl outOfRangeLabel
@@ -147,15 +163,6 @@ asmMain PROC
 	cmp gameOver, 0
 	je gameBeginLoop
 	jmp mainGameOver
-
-
-
-	turnOffAILabel:
-	mov noAI, 1
-	jmp gameBeginLoop
-	turnOnAILabel:
-	mov noAI, 0
-	jmp gameBeginLoop
 
 
 	mainGameOver:

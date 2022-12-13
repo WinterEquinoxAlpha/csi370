@@ -16,7 +16,7 @@ bool ai = true;
 
 bool assembly = true;
 
-extern "C" int getInput(bool& turn)
+extern "C" int getInput()
 {
 	int move = 0;
 	cout << "Enter Move (0-8): ";
@@ -25,6 +25,19 @@ extern "C" int getInput(bool& turn)
 		cin.clear();
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		cout << "Invalid input\n\nEnter Move (0-8): ";
+	}
+	return move;
+}
+
+extern "C" int queryAI()
+{
+	int move = 0;
+	cout << "Vs AI? (1 or 0): ";
+	while (!(cin >> move))
+	{
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Invalid input\n\nVs AI? (1 or 0): ";
 	}
 	return move;
 }
@@ -170,10 +183,20 @@ int main()
 	if (assembly)
 	{
 		asmMain();
-		return 0;
 	}
 	else
 	{
+		int useAI = -1;
+		while (useAI == -1)
+		{
+			useAI = queryAI();
+			if (useAI < 0 || useAI > 1)
+			{
+				cout << "Please input 0 or 1\n";
+				useAI = -1;
+			}
+		}
+		ai = useAI;
 		while (gameOver == -1)
 		{
 			int move = -1;
@@ -190,7 +213,7 @@ int main()
 					updateBoard(board, boardValues);
 					printString(board);
 
-					move = getInput(Xturn);
+					move = getInput();
 					if (move < 0 || move > 8)
 					{
 						cout << "Move out of range 0-8\n\n";
@@ -223,4 +246,5 @@ int main()
 		else if (gameOver == 2)
 			cout << "O Wins\n";
 	}
+	return 0;
 }
